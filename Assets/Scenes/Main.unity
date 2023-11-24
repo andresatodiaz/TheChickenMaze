@@ -7387,12 +7387,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.4, y: 4.6, z: -10.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.17000008, y: 1.603, z: -6.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 939827993}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &552253621
 PrefabInstance:
@@ -7658,7 +7658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9de18cf3c39d6d1409506536f98b008d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.59
+      value: 3.2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9de18cf3c39d6d1409506536f98b008d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7698,7 +7698,10 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 11fcd8e7c8d8c4cd9adc159dc3b14d97, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 400000, guid: 9de18cf3c39d6d1409506536f98b008d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 534669905}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 9de18cf3c39d6d1409506536f98b008d, type: 3}
       insertIndex: -1
@@ -13050,7 +13053,7 @@ CapsuleCollider:
   m_Radius: 0.4070325
   m_Height: 2.0245805
   m_Direction: 1
-  m_Center: {x: 0, y: 0.91229033, z: 0.09296751}
+  m_Center: {x: 0, y: 1.2, z: 0.09296751}
 --- !u!54 &939827986
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13091,6 +13094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  player: {fileID: 0}
 --- !u!114 &939827988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13146,7 +13150,12 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
+--- !u!4 &939827993 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 9de18cf3c39d6d1409506536f98b008d, type: 3}
+  m_PrefabInstance: {fileID: 574439092}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &943047387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32106,7 +32115,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 534669905}
   - {fileID: 811365928}
   - {fileID: 1259329872}
   - {fileID: 1835846253}
