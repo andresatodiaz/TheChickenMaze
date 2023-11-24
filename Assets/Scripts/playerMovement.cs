@@ -11,7 +11,7 @@ public class playerMovement : MonoBehaviour
 
     public Animator animator;
     private CharacterController characterController;
-    private float RotationSpeed = 15f;
+    private float RotationSpeed = 80f;
     private float MovementSpeed = 3;
 
     private bool isAttacking = false;
