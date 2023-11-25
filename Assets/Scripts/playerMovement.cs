@@ -14,8 +14,8 @@ public class playerMovement : MonoBehaviour
     private float RotationSpeed = 80f;
     private float MovementSpeed = 3;
 
-    private bool isAttacking = false;
-    private bool isRunning = false;
+    public bool isAttacking = false;
+    public bool isRunning = false;
     private float attackTimer=0f;
     private Vector2 lastMovement; 
 
