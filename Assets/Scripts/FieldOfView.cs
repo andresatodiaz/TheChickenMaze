@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class FieldOfView : MonoBehaviour
 {
-    public float radius  = 10f;
+    public float radius  = 100f;
     [Range(1,360)]public float angle = 45f;
     public LayerMask targetLayer;
     public LayerMask obstructionLayer;
@@ -26,7 +26,8 @@ public class FieldOfView : MonoBehaviour
         WaitForSeconds wait = new WaitForSeconds(0.2f);
         while(true){
             yield return wait;
-            FOV();
+            //FOV();
+            FOV2();
         }
     }
 
@@ -58,7 +59,38 @@ public class FieldOfView : MonoBehaviour
         }else if(CanSeePlayer){
             CanSeePlayer=false;
         }
-    }   
+    }  
+
+    private void FOV2(){
+        // Get the angle between the forward direction and the target direction
+        Vector3 targetDirection = transform.forward;
+        float angleToTarget = Vector3.Angle(transform.forward, targetDirection);
+
+        // Check if the target is within the field of view
+        if (angleToTarget < angle / 2f)
+        {
+            // Cast a ray from the observer to the target
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, targetDirection, out hit, Mathf.Infinity))
+            {   
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                // Check if the raycast hit the target
+                if (hit.collider.gameObject == playerRef)
+                {
+                    // The target is in sight!
+                    Debug.Log("Target in sight!");
+                    CanSeePlayer=true;
+                }else{
+                    CanSeePlayer=false;
+                }
+            }else{
+                CanSeePlayer=false;
+            }
+        }else{
+            CanSeePlayer=false;
+        }
+       
+    } 
 
 
     // Update is called once per frame

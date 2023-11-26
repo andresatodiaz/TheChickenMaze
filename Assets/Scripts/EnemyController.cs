@@ -10,9 +10,14 @@ public class EnemyController : MonoBehaviour
 {
 
     public Animator animator;
+
+    public float health = 100f;
+
+    public float damage = 5f;
     [SerializeField] GameObject player;
 
     [SerializeField] GameObject blood;
+    [SerializeField] GameObject explosion;
 
     [SerializeField] GameObject eyeLevel;
 
@@ -29,6 +34,12 @@ public class EnemyController : MonoBehaviour
 
 
     private int direction=1;
+
+        // How long it takes to go from eulerAngles1 to eulerAngles2
+    public float duration=1f;
+
+    Quaternion rotation1;
+    Quaternion rotation2;
 
 
 
@@ -48,57 +59,79 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         checkingAngle=angle;
+
+        rotation1 = Quaternion.Euler(
+            new Vector3(
+                transform.eulerAngles.x,
+                transform.eulerAngles.y,
+                transform.eulerAngles.z
+            )
+        );
+        rotation2 = Quaternion.Euler(
+            new Vector3(
+                transform.eulerAngles.x,
+                transform.eulerAngles.y+60f,
+                transform.eulerAngles.z
+            )
+        );
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(health<=0f){
+            gameObject.SetActive(false);
+        }
 
         if(player.transform.position.x>=0){
             distanceFromPlayer = 1f;
         }else{
             distanceFromPlayer = -1f;
         }
+        
+        if(eyeLevel.GetComponent<FieldOfView>().CanSeePlayer==false){
+            var factor = Mathf.PingPong(Time.time / duration, 1);
+            // Optionally you can even add some ease-in and -out
+            factor = Mathf.SmoothStep(0, 1, factor);
 
-        Ray ray;
-        RaycastHit hit;
-        
-        if(!eyeLevel.GetComponent<FieldOfView>().CanSeePlayer){
-            if(checkingTimer>0f ){
-                checkingTimer-=Time.deltaTime;
-                gameObject.transform.eulerAngles=new Vector3(
-                gameObject.transform.eulerAngles.x,
-                gameObject.transform.eulerAngles.y+checkingAngle,
-                gameObject.transform.eulerAngles.z
-                );
-            }else if( checkingTimer<=0f){
-                checkingTimer=0.5f;
-                checkingAngle=-1f*angle;
-            }
-        } 
-        
+            // Now interpolate between the two rotations on the current factor
+            transform.rotation = Quaternion.Slerp(rotation1, rotation2, factor);
+        }   
+         
 
         if (eyeLevel.GetComponent<FieldOfView>().CanSeePlayer == true){
             Debug.Log("mirandolo");
-                agent.SetDestination(
-                    new Vector3(
-                        player.transform.position.x+10f,
-                        player.transform.position.y,
-                        player.transform.position.z
-                    )
-                );
+            Debug.Log(transform.position.x-player.transform.position.x);
+                if((transform.position.x-player.transform.position.x>=0 && transform.position.x-player.transform.position.x<=2f) || (transform.position.x-player.transform.position.x<0 && transform.position.x-player.transform.position.x>=-2f)){
+                    animator.SetBool("isShooting",true);
+                    animator.SetBool("isRunning",false);
+                    GameObject temp = Resources.Load<GameObject>("BulletCollision");
+                    GameObject gameObjectReference = Instantiate(temp,explosion.transform.position,explosion.transform.rotation) as GameObject;
+                    gameObjectReference.transform.parent = gameObject.transform;
+                    gameObjectReference.transform.rotation= gameObject.transform.rotation;
+                    Destroy(gameObjectReference, 0.1f);
+                    Debug.Log(transform.position.y-player.transform.position.y);
+                    //agent.isStopped=true;
+                    //agent.ResetPath();
+                }else{
+                    Debug.Log("Perseguir");
+                    agent.SetDestination(
+                        new Vector3(
+                            player.transform.position.x+distanceFromPlayer*1f,
+                            player.transform.position.y,
+                            player.transform.position.z
+                        )
+                    );
+                    animator.SetBool("isRunning",true);
+                    animator.SetBool("isShooting",false);
+                }
                 
-                animator.SetBool("isRunning",true);
         }else if(eyeLevel.GetComponent<FieldOfView>().CanSeePlayer == false){
-                agent.SetDestination(
-                    new Vector3(
-                        gameObject.transform.position.x,
-                        gameObject.transform.position.y,
-                        gameObject.transform.position.z
-                    )
-                );
                 animator.SetBool("isRunning",false);
+                animator.SetBool("isShooting",false);
+                agent.isStopped=true;
+                agent.ResetPath();
         }
 
         
@@ -129,7 +162,13 @@ public class EnemyController : MonoBehaviour
                 gameObject.transform.position.z
             );
             gameObjectReference.transform.rotation= Quaternion.Inverse(other.transform.rotation);
-        
+
+            if( player.GetComponent<playerMovement>().typeAttack==2){
+                health-=30f;
+            }else if(player.GetComponent<playerMovement>().typeAttack==1){
+                health-=10f;
+            }
+            
         }
     }
 

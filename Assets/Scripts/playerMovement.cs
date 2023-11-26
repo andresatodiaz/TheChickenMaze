@@ -12,11 +12,13 @@ public class playerMovement : MonoBehaviour
     public Animator animator;
     private CharacterController characterController;
     private float RotationSpeed = 80f;
-    private float MovementSpeed = 3;
+    private float MovementSpeed = 15;
 
     public bool isAttacking = false;
+
+    public int typeAttack;
     public bool isRunning = false;
-    private float attackTimer=0f;
+    public float attackTimer=0f;
     private Vector2 lastMovement; 
 
     [SerializeField] private GameObject player;
@@ -67,6 +69,7 @@ public class playerMovement : MonoBehaviour
             animator.SetBool("isAttackingLight",false);
             animator.SetBool("isAttackingHeavy",false);
             isAttacking=false;
+            typeAttack=0;
         }
 
         if(isRunning){
@@ -110,14 +113,22 @@ public class playerMovement : MonoBehaviour
     }
 
     public void OnAttackLight(InputValue value){
-        animator.SetBool("isAttackingLight",true);
-        isAttacking=true;
-        attackTimer=1.5f;
+        if(!isRunning){
+            animator.SetBool("isAttackingLight",true);
+            isAttacking=true;
+            attackTimer=1.5f;
+            typeAttack=1;
+        }
+        
     }
 
     public void OnAttackHeavy(InputValue value){
-        animator.SetBool("isAttackingHeavy",true);
-        isAttacking=true;
-        attackTimer=1.5f;
+        if(!isRunning){
+            animator.SetBool("isAttackingHeavy",true);
+            isAttacking=true;
+            attackTimer=1.5f;
+            typeAttack=2;
+        }
+        
     }
 }
