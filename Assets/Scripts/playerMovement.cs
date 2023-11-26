@@ -14,6 +14,8 @@ public class playerMovement : MonoBehaviour
     private float RotationSpeed = 80f;
     private float MovementSpeed = 15;
 
+    public float health = 1f;
+
     public bool isAttacking = false;
 
     public int typeAttack;
@@ -22,6 +24,8 @@ public class playerMovement : MonoBehaviour
     private Vector2 lastMovement; 
 
     [SerializeField] private GameObject player;
+
+    [SerializeField] public GameObject healthBar;
     private Transform myCamera;
 
      /// <summary>
@@ -37,12 +41,15 @@ public class playerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        healthBar.GetComponent<Slider>().value=health;
     }
 
     // Update is called once per frame
     void Update()
     {
+        healthBar.GetComponent<Slider>().value=health;
+        Debug.Log(health);
+
         if(lastMovement.x==0 && lastMovement.y==0){
             isRunning=false;
         }

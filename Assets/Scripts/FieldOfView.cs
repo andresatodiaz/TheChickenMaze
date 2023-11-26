@@ -15,6 +15,9 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] GameObject playerRef;
 
     [SerializeField] GameObject eyeLevel;
+    private Vector3 targetDirection;
+
+    public bool onPersuit=false;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +26,7 @@ public class FieldOfView : MonoBehaviour
     }
 
     private IEnumerator FOVCheck(){
-        WaitForSeconds wait = new WaitForSeconds(0.2f);
+        WaitForSeconds wait = new WaitForSeconds(0.05f);
         while(true){
             yield return wait;
             //FOV();
@@ -63,17 +66,23 @@ public class FieldOfView : MonoBehaviour
 
     private void FOV2(){
         // Get the angle between the forward direction and the target direction
-        Vector3 targetDirection = transform.forward;
+        if(onPersuit){
+            targetDirection = playerRef.transform.forward;
+            Debug.Log("onPersuit");
+        }else{
+            targetDirection = transform.forward;
+        }
+        
         float angleToTarget = Vector3.Angle(transform.forward, targetDirection);
 
         // Check if the target is within the field of view
-        if (angleToTarget < angle / 2f)
+        if (angleToTarget < angle )
         {
             // Cast a ray from the observer to the target
             RaycastHit hit;
             if (Physics.Raycast(transform.position, targetDirection, out hit, Mathf.Infinity))
             {   
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                Debug.DrawRay(transform.position, targetDirection * hit.distance, Color.yellow);
                 // Check if the raycast hit the target
                 if (hit.collider.gameObject == playerRef)
                 {
