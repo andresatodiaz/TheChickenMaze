@@ -49,6 +49,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Euforia",
+                    "type": "Button",
+                    "id": "d7a16f3a-6141-40e0-a630-8eaca58d20ee",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ice",
+                    "type": "Button",
+                    "id": "f546ed03-fe3e-4255-a1bf-58088fdbfbfb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -346,6 +364,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "AttackHeavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb60a45f-6e25-4d53-a01f-197f77c587e7",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Euforia",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "111a81fe-f3ae-4d52-aabc-d6ac3d3d65d2",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ice",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

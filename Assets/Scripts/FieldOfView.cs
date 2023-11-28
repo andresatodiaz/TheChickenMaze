@@ -80,7 +80,7 @@ public class FieldOfView : MonoBehaviour
         {
             // Cast a ray from the observer to the target
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, targetDirection, out hit, Mathf.Infinity))
+            if (Physics.Raycast(transform.position, targetDirection, out hit, 50f))
             {   
                 Debug.DrawRay(transform.position, targetDirection * hit.distance, Color.yellow);
                 // Check if the raycast hit the target
