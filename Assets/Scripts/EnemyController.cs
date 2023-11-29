@@ -54,6 +54,8 @@ public class EnemyController : MonoBehaviour
 
     private bool shooting=false;
 
+    private Vector3 forwardPlayer;
+
 
 
 
@@ -154,10 +156,13 @@ public class EnemyController : MonoBehaviour
                         gameObjectReference.transform.parent = gameObject.transform;
                         gameObjectReference.transform.rotation= gameObject.transform.rotation;
                         Destroy(gameObjectReference, 0.1f);
-                        player.GetComponent<playerMovement>().health-=0.005f;
+                        if(player.GetComponent<playerMovement>().EuforiaTimer<=0f){
+                            player.GetComponent<playerMovement>().health-=0.005f;
+                        }
                         onPersuit=true;
                         eyeLevel.GetComponent<FieldOfView>().onPersuit=true;
                         shootingTimer=1.5f;
+                        transform.transform.forward=-player.transform.forward;
                         agent.isStopped = true;
                         agent.ResetPath();
                     }else{
@@ -201,12 +206,15 @@ public class EnemyController : MonoBehaviour
                 && ((transform.position.z-player.transform.position.z>=0 && transform.position.x-player.transform.position.z<=6f) || (transform.position.x-player.transform.position.z<0 && transform.position.x-player.transform.position.z>=-6f))){
                         animator.SetBool("isShooting",true);
                         animator.SetBool("isRunning",false);
+                        transform.transform.forward=-player.transform.forward;;
                         GameObject temp = Resources.Load<GameObject>("BulletCollision");
                         GameObject gameObjectReference = Instantiate(temp,explosion.transform.position,explosion.transform.rotation) as GameObject;
                         gameObjectReference.transform.parent = gameObject.transform;
                         gameObjectReference.transform.rotation= gameObject.transform.rotation;
                         Destroy(gameObjectReference, 0.1f);
-                        player.GetComponent<playerMovement>().health-=0.005f;
+                        if(player.GetComponent<playerMovement>().EuforiaTimer<=0f){
+                            player.GetComponent<playerMovement>().health-=0.005f;
+                        }
                         shootingTimer=1.5f;
                         agent.isStopped = true;
                         agent.ResetPath();
@@ -258,10 +266,12 @@ public class EnemyController : MonoBehaviour
 
             if(player.GetComponent<playerMovement>().typeAttack==2 && player.GetComponent<playerMovement>().isAttacking){
 
-                    if(player.GetComponent<playerMovement>().EuforiaTimer<=0f){
+                    if(player.GetComponent<playerMovement>().attackTimer<=0.5f){
+                        if(player.GetComponent<playerMovement>().EuforiaTimer<=0f){
                         health-=60f;
-                    }else{
-                        health-=100f;
+                        }else{
+                            health-=100f;
+                        }
                     }
                     
                     onPersuit=true;

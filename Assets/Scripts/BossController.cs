@@ -81,6 +81,9 @@ public class BossController : MonoBehaviour
         healthBar.GetComponent<Slider>().value=health/100f;
 
         if(health<=0f){
+            GameObject temp = Resources.Load<GameObject>("Explosion");
+            GameObject gameObjectReference = Instantiate(temp,gameObject.transform.position,gameObject.transform.rotation) as GameObject;
+            Destroy (gameObjectReference, 1.0f);
             gameObject.SetActive(false);
         }
 
@@ -171,7 +174,7 @@ public class BossController : MonoBehaviour
                         health-=2f;
                         onPersuit=true;
                     }else{
-                        health-=10f;
+                        health-=4f;
                         onPersuit=true;
                     }
                     
@@ -181,7 +184,7 @@ public class BossController : MonoBehaviour
                         health-=1f;
                         onPersuit=true;
                     }else{
-                        health-=5f;
+                        health-=2f;
                         onPersuit=true;
                     }
             } 

@@ -14,8 +14,14 @@ public class SmoothCameraFollow : MonoBehaviour
 	public float heightDamping = 2.0f;
 	public float rotationDamping = 3.0f;
 
+	public float targetPositionY;
+
 	// Place the script in the Camera-Control group in the component menu
 	[AddComponentMenu("Camera-Control/Smooth Follow")]
+
+	void Awake(){
+		targetPositionY=target.position.y-1.8f;
+	}
 
 	void LateUpdate () {
 		// Early out if we don't have a target
@@ -23,7 +29,7 @@ public class SmoothCameraFollow : MonoBehaviour
 
 		// Calculate the current rotation angles
 		float wantedRotationAngle = target.eulerAngles.y;
-		float wantedHeight = target.position.y + height;
+		float wantedHeight = targetPositionY + height;
 
 		float currentRotationAngle = transform.eulerAngles.y;
 		float currentHeight = transform.position.y;

@@ -41,7 +41,7 @@ public class playerMovement : MonoBehaviour
 
     public float IceTimer;
 
-    public float EuforiaTimer;
+    public float EuforiaTimer=0f;
 
     [SerializeField] TextMeshProUGUI m_Object;
 
