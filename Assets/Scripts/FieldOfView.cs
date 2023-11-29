@@ -84,12 +84,13 @@ public class FieldOfView : MonoBehaviour
             {   
                 Debug.DrawRay(transform.position, targetDirection * hit.distance, Color.yellow);
                 // Check if the raycast hit the target
-                if (hit.collider.gameObject == playerRef)
+                if (hit.collider.tag == "Player")
                 {
                     // The target is in sight!
                     Debug.Log("Target in sight!");
                     CanSeePlayer=true;
                 }else{
+                    Debug.Log(hit.collider.tag);
                     CanSeePlayer=false;
                 }
             }else{

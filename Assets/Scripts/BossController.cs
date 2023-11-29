@@ -109,7 +109,7 @@ public class BossController : MonoBehaviour
             transform.forward=newDir;  
         }
               
-        if(player.GetComponent<playerMovement>().IceTimer<=0){
+        if(player.GetComponent<playerMovement>().IceTimer<=0f){
             if (eyeLevel.GetComponent<FieldOfView>().CanSeePlayer == true){
                 bossInfo.SetActive(true);
                 animator.SetBool("isRunning",true);
