@@ -33,6 +33,7 @@ public class BossController : MonoBehaviour
     [SerializeField] public GameObject healthBar;
 
     public static AudioClip BossScream;
+    public static AudioClip BossDeath;
     AudioSource audioSrc;
 
 
@@ -61,6 +62,7 @@ public class BossController : MonoBehaviour
         bossWall1.SetActive(false);
         bossWall2.SetActive(false);
         BossScream= Resources.Load<AudioClip>("BossScream");
+        BossDeath= Resources.Load<AudioClip>("BossDeath");
         StartCoroutine(SoundOut());
         bossInfo.SetActive(false);
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -94,9 +96,9 @@ public class BossController : MonoBehaviour
         healthBar.GetComponent<Slider>().value=health/100f;
 
         if(health<=0f){
-            GameObject temp = Resources.Load<GameObject>("Explosion");
+            GameObject temp = Resources.Load<GameObject>("Volumetric");
             GameObject gameObjectReference = Instantiate(temp,gameObject.transform.position,gameObject.transform.rotation) as GameObject;
-            Destroy (gameObjectReference, 1.0f);
+            Destroy (gameObjectReference, 3.0f);
             gameObject.SetActive(false);
             bossWall1.SetActive(false);
             bossWall2.SetActive(false);
@@ -215,15 +217,21 @@ public class BossController : MonoBehaviour
             attackTimer=1.2f;
             animator.SetBool("isRunning",false);
             animator.SetBool("isAttacking",true);
-            player.GetComponent<playerMovement>().health-=0.1f;
+            player.GetComponent<playerMovement>().health-=0.2f;
             Debug.Log("atacando");
         }
     }
     IEnumerator SoundOut()
 	{
 		while (keepPlaying){
-        	GetComponent<AudioSource>().PlayOneShot(BossScream);  
+            if(health<=50f){
+                GetComponent<AudioSource>().PlayOneShot(BossDeath);  
+            }else{
+                GetComponent<AudioSource>().PlayOneShot(BossScream);  
+            }
+        	
 			yield return new WaitForSeconds(soundwait);
 		}
 	}
+
 }
