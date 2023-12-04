@@ -42,6 +42,14 @@ public class BossController : MonoBehaviour
      public int soundwait = 10;
 	bool keepPlaying=true;
 
+    private UnityEngine.AI.NavMeshAgent navMeshAgent;
+
+    private Quaternion initialRotation;
+    [SerializeField] GameObject bossWall1;
+    [SerializeField] GameObject bossWall2;
+
+    
+
     #region Readonly Properties
     public UnityEngine.AI.NavMeshAgent agent {private set; get;}
     #endregion
@@ -50,12 +58,16 @@ public class BossController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bossWall1.SetActive(false);
+        bossWall2.SetActive(false);
         BossScream= Resources.Load<AudioClip>("BossScream");
         StartCoroutine(SoundOut());
         bossInfo.SetActive(false);
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         
         animator = GetComponent<Animator>();
+        navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        initialRotation = transform.rotation;
 
         checkingAngle=angle;
 
@@ -78,6 +90,7 @@ public class BossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.rotation = initialRotation;
         healthBar.GetComponent<Slider>().value=health/100f;
 
         if(health<=0f){
@@ -85,6 +98,8 @@ public class BossController : MonoBehaviour
             GameObject gameObjectReference = Instantiate(temp,gameObject.transform.position,gameObject.transform.rotation) as GameObject;
             Destroy (gameObjectReference, 1.0f);
             gameObject.SetActive(false);
+            bossWall1.SetActive(false);
+            bossWall2.SetActive(false);
         }
 
         if(attackTimer>0f){
@@ -114,6 +129,8 @@ public class BossController : MonoBehaviour
                 bossInfo.SetActive(true);
                 animator.SetBool("isRunning",true);
                 animator.SetBool("isAttacking",false);
+                bossWall1.SetActive(true);
+                bossWall2.SetActive(true);
                 agent.SetDestination(
                             new Vector3(
                                 player.transform.position.x,
@@ -160,6 +177,8 @@ public class BossController : MonoBehaviour
         if((other.transform.CompareTag("Sword") || other.transform.CompareTag("Shield") ) && player.GetComponent<playerMovement>().isAttacking){
              Debug.Log(other.transform.position);
             GameObject temp = Resources.Load<GameObject>("Blood");
+            bossWall1.SetActive(true);
+                bossWall2.SetActive(true);
             GameObject gameObjectReference = Instantiate(temp,gameObject.transform.position,gameObject.transform.rotation) as GameObject;
             gameObjectReference.transform.parent = gameObject.transform;
             gameObjectReference.transform.position =  new Vector3(
@@ -190,13 +209,14 @@ public class BossController : MonoBehaviour
             } 
         }
 
-        if(other.transform.CompareTag("Player")){
+        if(other.transform.CompareTag("Player") || (other.transform.CompareTag("Sword") || other.transform.CompareTag("Shield") ) && !player.GetComponent<playerMovement>().isAttacking ){
             onPersuit=true;
             isAttacking=true;
             attackTimer=1.2f;
             animator.SetBool("isRunning",false);
             animator.SetBool("isAttacking",true);
             player.GetComponent<playerMovement>().health-=0.1f;
+            Debug.Log("atacando");
         }
     }
     IEnumerator SoundOut()

@@ -15,6 +15,7 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] GameObject playerRef;
 
     [SerializeField] GameObject eyeLevel;
+
     private Vector3 targetDirection;
 
     public bool onPersuit=false;
