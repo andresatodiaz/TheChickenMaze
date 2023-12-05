@@ -228,7 +228,7 @@ TextureImporter:
         width: 208
         height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -236,27 +236,6 @@ TextureImporter:
       bones: []
       spriteID: fee0df537b6c142a9ba358ab0521b1fd
       internalID: -711165367
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pngwing.com_5
-      rect:
-        serializedVersion: 2
-        x: 356
-        y: 108
-        width: 92
-        height: 89
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e7ec758cfa98c4486a1ff9f2f8c4eab2
-      internalID: 1155250168
       vertices: []
       indices: 
       edges: []
@@ -277,7 +256,6 @@ TextureImporter:
       pngwing.com_2: -714028448
       pngwing.com_3: 1307908930
       pngwing.com_4: -711165367
-      pngwing.com_5: 1155250168
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
