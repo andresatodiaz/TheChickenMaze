@@ -71,14 +71,7 @@ public class playerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameManager.Instance.canvasBeenShownCurr == 1){
-            Cursor.lockState = CursorLockMode.Locked;
-        }else{
-            Cursor.lockState = CursorLockMode.None;
-        }
-        
         healthBar.GetComponent<Slider>().value=health;
-        
     }
 
     // Update is called once per frame

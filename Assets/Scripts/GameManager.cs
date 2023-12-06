@@ -39,7 +39,11 @@ public class GameManager : MonoBehaviour
             ActivateCanvasNumber(canvasBeenShownCurr);
         }
 
-        if (canvasBeenShownCurr != 1){
+        if (canvasBeenShownCurr == 1){
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1F;
+        }else{
+            Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0.01F;
         }
     }
