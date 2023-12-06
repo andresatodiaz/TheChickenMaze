@@ -78,6 +78,9 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
         healthBar.GetComponent<Slider>().value=health;
+        if (health<0.01F){
+            GameManager.Instance.canvasBeenShownCurr = 3;
+        }
         euforiaBar.GetComponent<Slider>().value=euforia;
         m_Object.text=(euforia*100).ToString("R");
 
@@ -227,4 +230,7 @@ public class playerMovement : MonoBehaviour
         }
     }
 
+    public void OnOptionMenu(InputValue value){
+        GameManager.Instance.canvasBeenShownCurr = 2;
+    }
 }

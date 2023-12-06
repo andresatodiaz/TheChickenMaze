@@ -21,4 +21,12 @@ public class OptionMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void ContinueGame(){
+        GameManager.Instance.canvasBeenShownCurr = 1;
+    }
+
+    public void ExitGame(){
+        Application.Quit();
+    }
+
 }
